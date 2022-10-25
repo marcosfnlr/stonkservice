@@ -6,7 +6,6 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP=flaskr
-ENV FLASK_ENV=development
 
 COPY flaskr ./flaskr
 

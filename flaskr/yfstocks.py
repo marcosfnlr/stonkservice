@@ -1,6 +1,7 @@
 import yfinance as yf
+import csv
 from flask import (
-    Blueprint, request
+    Blueprint, request, current_app
 )
 
 bp = Blueprint('stocks', __name__, url_prefix='/stocks')
@@ -19,6 +20,14 @@ def history():
         return history.to_dict()
 
     return {'message': 'Invalid parameters'}, 401
+
+
+@bp.route('/list', methods=(['GET']))
+def list():
+    with open('flaskr/available_stocks.csv', mode='r') as infile:
+        reader = csv.reader(infile)
+        next(reader)
+        return {'stocks': [{'symbol': row[0], 'name': row[1], } for row in reader]}
 
 
 def valid_request():
